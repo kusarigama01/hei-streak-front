@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./pages/Login.jsx";
-import { AdminPlaceholder } from "./pages/AdminPlaceholder.jsx";
+import { AdminDashboard } from "./pages/AdminDashboard.jsx";
 import { StudentPlaceholder } from "./pages/StudentPlaceholder.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
@@ -10,10 +10,10 @@ function App() {
       <Route path="/login" element={<Login />} />
 
       <Route
-        path="/admin/*"
+        path="/admin"
         element={
           <ProtectedRoute requiredRole="admin">
-            <AdminPlaceholder />
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />
