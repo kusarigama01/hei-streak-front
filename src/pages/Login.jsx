@@ -22,8 +22,8 @@ export function Login() {
 
     try {
       const data = await api.post("/auth/login", { email, password });
-      login(data.token, data.role);
-      navigate(data.role === "admin" ? "/admin" : "/student");
+      login(data.token, data.user.role);
+      navigate(data.user.role === "admin" ? "/admin" : "/student");
     } catch (err) {
       setError(err.message);
     } finally {
