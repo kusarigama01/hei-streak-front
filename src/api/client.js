@@ -6,7 +6,7 @@ Wrapper fetch centralisé.
 	- Parse la réponse JSON
 	- Normalise les erreurs sur le format serveur { message: "..." }
  */
-async function request(endpoint, options = {}) {
+const request = async (endpoint, options = {}) => {
   const token = localStorage.getItem("token");
 
   const headers = {

@@ -1,0 +1,174 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ===== Panneau gauche : bleu marine ===== */
+.login-left {
+  flex: 1.75;
+  background-color: #0a1f44;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem;
+  position: relative;
+}
+
+.login-logo {
+  max-width: 720px;
+  margin-bottom: 2rem;
+}
+
+.login-description {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #dddddd;
+  max-width: 480px;
+}
+
+/* Demi-cadres decoratifs, coin haut-gauche et coin bas-droite */
+.corner {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #d4af37;
+}
+
+.corner-top-left {
+  top: 2rem;
+  left: 2rem;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-bottom-right {
+  bottom: 2rem;
+  right: 2rem;
+  border-left: none;
+  border-top: none;
+}
+
+/* ===== Panneau droit : clair ===== */
+.login-right {
+  flex: 1;
+  background-color: #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 460px; /* était 380px */
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* était 1rem */
+}
+
+.login-form h1 {
+  color: #0a1f44;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 2rem; /* pas de valeur avant, taille par defaut du navigateur */
+  margin-bottom: 1rem;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  color : #0a1f44;
+  padding: 1rem 1.25rem;
+  font-size: 1.05rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+}
+
+.login-role-select {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.login-role-select label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #0a1f44;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-role-select input[type="radio"] {
+  accent-color: #0a1f44;
+  cursor: pointer;
+}
+
+.login-role-select button {
+  margin-left: auto;
+  padding: 0.7rem 1.8rem;
+  background-color: #0a1f44;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.login-role-select button:hover:not(:disabled) {
+  background-color: #d4af37;
+  color: #0a1f44;
+}
+
+.login-role-select button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.login-role-select button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-error {
+  background-color: #fdecea;
+  border-left: 4px solid #c0392b;
+  color: #c0392b;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Responsive : empile les panneaux sur mobile plutot que de les ecraser */
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-left {
+    padding: 2rem;
+    min-height: 40vh;
+  }
+
+  .corner {
+    width: 60px;
+    height: 60px;
+  }
+}
