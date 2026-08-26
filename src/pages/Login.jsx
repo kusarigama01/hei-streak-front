@@ -37,7 +37,7 @@ export function Login() {
         <div className="corner corner-top-left" />
         <img src={logo} alt="HEI Streak" className="login-logo" />
         <p className="login-description">
-          Manage exams, track results, and streamline the way HEI handles
+          Our online coding learning platform. Manage exams, track results, and streamline the way HEI handles
           assessments — all in one place, built for students and
           administrators alike.
         </p>
@@ -46,7 +46,7 @@ export function Login() {
 
       <div className="login-right">
         <form className="login-form" onSubmit={handleSubmit}>
-          <h1>Login</h1>
+          <h1>Login management</h1>
 
           {error && <p className="login-error">{error}</p>}
 
