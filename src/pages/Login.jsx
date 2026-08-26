@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/client.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import logo from "../assets/hei-streak-logo.png";
 import "./Login.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [uiRole, setUiRole] = useState("student"); // decoratif uniquement, n'est jamais envoye au serveur
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -31,33 +33,67 @@ export function Login() {
 
   return (
     <div className="login-page">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h1>Exam Hub</h1>
+      <div className="login-left">
+        <div className="corner corner-top-left" />
+        <img src={logo} alt="HEI Streak" className="login-logo" />
+        <p className="login-description">
+          Manage exams, track results, and streamline the way HEI handles
+          assessments — all in one place, built for students and
+          administrators alike.
+        </p>
+        <div className="corner corner-bottom-right" />
+      </div>
 
-        {error && <p className="login-error">{error}</p>}
+      <div className="login-right">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h1>Login</h1>
 
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          {error && <p className="login-error">{error}</p>}
 
-        <label htmlFor="password">Mot de passe</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Connexion..." : "Se connecter"}
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <div className="login-role-select">
+            <label>
+              <input
+                type="radio"
+                name="uiRole"
+                value="admin"
+                checked={uiRole === "admin"}
+                onChange={() => setUiRole("admin")}
+              />
+              Admin
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="uiRole"
+                value="student"
+                checked={uiRole === "student"}
+                onChange={() => setUiRole("student")}
+              />
+              Student
+            </label>
+
+            <button type="submit" disabled={loading}>
+              {loading ? "..." : "Login"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
