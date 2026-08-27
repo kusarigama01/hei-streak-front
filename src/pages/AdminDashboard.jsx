@@ -129,7 +129,7 @@ export function AdminDashboard() {
 						) : (
 							<div className="empty-state">
 								<img src={logo} alt="" className="empty-state-logo" />
-								<p>No accounts created yet</p>
+								<p>Select or create a student</p>
 							</div>
 						)}
 					</>
