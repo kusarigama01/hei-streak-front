@@ -235,3 +235,47 @@
 .action-list-item.inactive {
   opacity: 0.55;
 }
+
+.action-search {
+  padding: 0.65rem 1rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-size: 0.9rem;
+  outline: none;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-search::placeholder {
+  color: #999999;
+}
+
+.action-search:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+.action-filter {
+  padding: 0.6rem 1rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 1.5rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A1F44' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.25rem;
+  transition: border-color 0.15s ease;
+}
+
+.action-filter:focus {
+  border-color: #d4af37;
+}

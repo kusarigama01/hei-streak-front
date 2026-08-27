@@ -25,6 +25,9 @@ export function AdminDashboard() {
 	const navigate = useNavigate();
 	const [isEditing, setIsEditing] = useState(false);
 
+	const [courses, setCourses] = useState([]);
+	const [courseSearch, setCourseSearch] = useState("");
+
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
@@ -152,7 +155,29 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.COURSES && <div>Courses view (a construire)</div>}
+				{section === SECTIONS.COURSES && (
+					<>
+						{courses.length === 0 ? (
+							<div className="empty-state">
+								<img src={logo} alt="" className="empty-state-logo" />
+								<p>No courses created yet</p>
+							</div>
+						) : (
+							<div className="course-grid">
+								{courses.map((c) => (
+									<div key={c.id} className="course-tile" style={{ borderColor: c.color }}>
+										<i className={`fa-solid ${c.icon}`} style={{ color: c.color }}></i>
+										<span className="course-code" style={{ backgroundColor: c.color }}>
+											{c.code}
+										</span>
+										<h3>{c.name}</h3>
+										<p>{c.description}</p>
+									</div>
+								))}
+							</div>
+						)}
+					</>
+				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
 			</main>
@@ -204,7 +229,40 @@ export function AdminDashboard() {
 					</>
 				)}
 
-				{section === SECTIONS.COURSES && <div>Courses actions (a construire)</div>}
+				{section === SECTIONS.COURSES && (
+					<>
+						<button className="action-create" disabled>
+							Add course
+						</button>
+
+						<input
+							type="text"
+							className="action-search"
+							placeholder="Search courses..."
+							value={courseSearch}
+							onChange={(e) => setCourseSearch(e.target.value)}
+						/>
+
+						<select className="action-filter">
+							<option value="">Filter...</option>
+							<option value="PROG2">PROG2</option>
+							<option value="WEB2">WEB2</option>
+							<option value="SYS2">SYS2</option>
+							<option value="LV1">LV1</option>
+						</select>
+
+						<div className="action-list">
+							{courses.length === 0 && (
+								<p className="action-list-empty">No courses yet</p>
+							)}
+							{courses.map((c) => (
+								<div key={c.id} className="action-list-item">
+									{c.code} — {c.name}
+								</div>
+							))}
+						</div>
+					</>
+				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams actions (a construire)</div>}
 			</aside>
