@@ -1,0 +1,130 @@
+.student-form {
+  width: 100%;
+  max-width: 560px;
+  background-color: #ffffff;
+  border: 2px solid #0a1f44;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.student-form h2 {
+  color: #0a1f44;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.5rem;
+  border-bottom: 3px solid #d4af37;
+  padding-bottom: 0.75rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  color: #0a1f44;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.form-field input,
+.form-field select {
+  padding: 0.75rem 1.1rem;
+  border: 2px solid #cccccc;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #0a1f44;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+.form-field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A1F44' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.25rem center;
+  padding-right: 2.5rem;
+}
+
+.field-hint {
+  color: #888888;
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-cancel,
+.btn-create {
+  padding: 0.8rem 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-cancel {
+  background-color: #f4f4f4;
+  color: #666666;
+  border: 2px solid #cccccc;
+}
+
+.btn-cancel:hover {
+  background-color: #e8e8e8;
+}
+
+.btn-create {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+.btn-create:hover {
+  background-color: #d4af37;
+  color: #0a1f44;
+}
+
+.btn-cancel:active,
+.btn-create:active {
+  transform: scale(0.96);
+}
+
+.form-field input[type="file"] {
+  border: 2px dashed #cccccc;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+.avatar-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #0a1f44;
+  margin-top: 0.5rem;
+}
