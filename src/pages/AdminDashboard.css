@@ -300,6 +300,7 @@
 
 .course-tile {
   background-color: #ffffff;
+  max-height: 280px;
   border: 2px solid;
   border-radius: 16px;
   padding: 1.5rem 1.25rem;
@@ -347,4 +348,79 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.course-tile {
+  padding: 1.25rem 1rem; /* reduit par rapport a avant, la description ne pousse plus la hauteur */
+}
+
+.course-tile p {
+  display: none; /* la description n'apparait plus dans la grille */
+}
+
+.course-date {
+  color: #999999;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.course-view-btn {
+  margin-top: 0.5rem;
+  background: none;
+  border: 2px solid #0a1f44;
+  color: #0a1f44;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.course-view-btn:hover {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+.course-detail {
+  max-width: 640px;
+  width: 100%;
+  background-color: #ffffff;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.course-detail i {
+  font-size: 2.5rem;
+}
+
+.course-back-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #0a1f44;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.course-back-btn:hover {
+  color: #d4af37;
+}
+
+.course-full-description {
+  color: #444444;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  text-align: left;
+  margin-top: 1rem;
 }

@@ -33,6 +33,8 @@ export function AdminDashboard() {
 
 	const [isCreatingCourse, setIsCreatingCourse] = useState(false);
 
+	const [viewedCourse, setViewedCourse] = useState(null);
+
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
@@ -160,7 +162,7 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.COURSES && !isCreatingCourse && (
+				{section === SECTIONS.COURSES && !isCreatingCourse && !viewedCourse && (
 					<>
 						{courses.length === 0 ? (
 							<div className="empty-state">
@@ -176,7 +178,13 @@ export function AdminDashboard() {
 											{c.code}
 										</span>
 										<h3>{c.name}</h3>
-										<p>{c.description}</p>
+										<span className="course-date">{c.createdAt}</span>
+										<button
+											className="course-view-btn"
+											onClick={() => setViewedCourse(c)}
+										>
+											View course
+										</button>
 									</div>
 								))}
 							</div>
@@ -194,11 +202,33 @@ export function AdminDashboard() {
 								id: Date.now(),
 								color: meta.color,
 								icon: meta.icon,
+								createdAt: new Date().toLocaleString("en-GB", {
+									day: "2-digit",
+									month: "2-digit",
+									year: "numeric",
+									hour: "2-digit",
+									minute: "2-digit",
+								}),
 							};
 							setCourses([...courses, newCourse]);
 							setIsCreatingCourse(false);
 						}}
 					/>
+				)}
+
+				{section === SECTIONS.COURSES && viewedCourse && !isCreatingCourse && (
+					<div className="course-detail" style={{ borderColor: viewedCourse.color }}>
+						<button className="course-back-btn" onClick={() => setViewedCourse(null)}>
+							← Back to courses
+						</button>
+						<i className={`fa-solid ${viewedCourse.icon}`} style={{ color: viewedCourse.color }}></i>
+						<span className="course-code" style={{ backgroundColor: viewedCourse.color }}>
+							{viewedCourse.code}
+						</span>
+						<h2>{viewedCourse.name}</h2>
+						<span className="course-date">{viewedCourse.createdAt}</span>
+						<p className="course-full-description">{viewedCourse.description}</p>
+					</div>
 				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
