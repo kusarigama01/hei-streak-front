@@ -220,3 +220,18 @@
   background-color: #d2691e;
   color: #ffffff;
 }
+
+.inactive-badge {
+  background-color: #c0392b;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-left: 0.4rem;
+}
+
+.action-list-item.inactive {
+  opacity: 0.55;
+}
