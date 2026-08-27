@@ -5,6 +5,7 @@ import logo from "../assets/hei-streak-logo.png";
 import dlogo from "../assets/d-logo.png";
 import "./AdminDashboard.css";
 import { ProfileCard } from "../components/ProfileCard.jsx";
+import { StudentForm } from "./StudentForm.jsx";
 
 const SECTIONS = {
 	PROFILE: "profile",
@@ -104,7 +105,15 @@ export function AdminDashboard() {
 				)}
 
 				{section === SECTIONS.STUDENTS && isCreating && (
-					<div>Formulaire de creation (a construire)</div>
+					<StudentForm
+						onCancel={() => setIsCreating(false)}
+						onCreate={(newStudent) => {
+							const studentWithId = { ...newStudent, id: Date.now() };
+							setStudents([...students, studentWithId]);
+							setSelectedStudent(studentWithId);
+							setIsCreating(false);
+						}}
+					/>
 				)}
 
 				{section === SECTIONS.COURSES && <div>Courses view (a construire)</div>}
