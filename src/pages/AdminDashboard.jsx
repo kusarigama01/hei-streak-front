@@ -7,6 +7,9 @@ import "./AdminDashboard.css";
 import { ProfileCard } from "../components/ProfileCard.jsx";
 import { StudentForm } from "./StudentForm.jsx";
 
+import { CourseForm } from "./CourseForm.jsx";
+import { COURSE_META } from "./courseMeta.js";
+
 const SECTIONS = {
 	PROFILE: "profile",
 	STUDENTS: "students",
@@ -27,6 +30,8 @@ export function AdminDashboard() {
 
 	const [courses, setCourses] = useState([]);
 	const [courseSearch, setCourseSearch] = useState("");
+
+	const [isCreatingCourse, setIsCreatingCourse] = useState(false);
 
 	const handleLogout = () => {
 		logout();
@@ -155,7 +160,7 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.COURSES && (
+				{section === SECTIONS.COURSES && !isCreatingCourse && (
 					<>
 						{courses.length === 0 ? (
 							<div className="empty-state">
@@ -177,6 +182,23 @@ export function AdminDashboard() {
 							</div>
 						)}
 					</>
+				)}
+
+				{section === SECTIONS.COURSES && isCreatingCourse && (
+					<CourseForm
+						onCancel={() => setIsCreatingCourse(false)}
+						onCreate={(newCourseData) => {
+							const meta = COURSE_META[newCourseData.code];
+							const newCourse = {
+								...newCourseData,
+								id: Date.now(),
+								color: meta.color,
+								icon: meta.icon,
+							};
+							setCourses([...courses, newCourse]);
+							setIsCreatingCourse(false);
+						}}
+					/>
 				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
@@ -231,7 +253,9 @@ export function AdminDashboard() {
 
 				{section === SECTIONS.COURSES && (
 					<>
-						<button className="action-create" disabled>
+						<button
+							className="action-create"
+							onClick={() => setIsCreatingCourse(true)}>
 							Add course
 						</button>
 
