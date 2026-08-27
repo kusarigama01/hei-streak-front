@@ -81,6 +81,8 @@
   flex: 1;
   padding: 2.5rem;
   overflow-y: auto;
+  display: flex;
+  justify-content: center;
 }
 
 /* ===== Barre d'actions droite ===== */
