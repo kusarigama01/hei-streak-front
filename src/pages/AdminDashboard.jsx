@@ -20,7 +20,7 @@ export function AdminDashboard() {
 	const [students, setStudents] = useState([]);
 	const [selectedStudent, setSelectedStudent] = useState(null);
 	const [isCreating, setIsCreating] = useState(false);
-	
+
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 	const [isEditing, setIsEditing] = useState(false);
@@ -160,13 +160,8 @@ export function AdminDashboard() {
 						{selectedStudent && !isCreating && (
 							<div className="action-student-controls">
 								<button onClick={() => setIsEditing(true)}>Edit</button>
-								<button onClick={() => handleResetPassword(selectedStudent)}>
-									Reset password
-								</button>
-								<button
-									className="action-danger"
-									onClick={() => handleDeactivate(selectedStudent)}
-								>
+								<button className="action-warning" onClick={() => handleResetPassword(selectedStudent)}>Reset password</button>
+								<button className="action-danger" onClick={() => handleDeactivate(selectedStudent)}>
 									{selectedStudent.isActive === false ? "Reactivate" : "Deactivate"}
 								</button>
 							</div>

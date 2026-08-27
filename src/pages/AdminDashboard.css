@@ -168,3 +168,55 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
+
+.action-student-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.action-student-controls button {
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border: 2px solid #0a1f44;
+  background-color: #ffffff;
+  color: #0a1f44;
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0% 100%);
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.action-student-controls button:hover {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+.action-student-controls button:active {
+  transform: scale(0.8);
+}
+
+.action-student-controls .action-danger {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+.action-student-controls .action-danger:hover {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+.action-student-controls .action-warning {
+  border-color: #d2691e;
+  color: #d2691e;
+}
+
+.action-student-controls .action-warning:hover {
+  background-color: #d2691e;
+  color: #ffffff;
+}
