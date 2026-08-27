@@ -279,3 +279,14 @@
 .action-filter:focus {
   border-color: #d4af37;
 }
+
+.action-create:disabled {
+  background-color: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+}
+
+.action-create:disabled:hover {
+  background-color: #cccccc;
+}
