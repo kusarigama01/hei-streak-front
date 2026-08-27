@@ -14,18 +14,39 @@ const SECTIONS = {
 	EXAMS: "exams",
 };
 
+
 export function AdminDashboard() {
 	const [section, setSection] = useState(SECTIONS.PROFILE);
-	const [students, setStudents] = useState([]); // sera rempli via l'API plus tard
+	const [students, setStudents] = useState([]);
 	const [selectedStudent, setSelectedStudent] = useState(null);
 	const [isCreating, setIsCreating] = useState(false);
-
+	
 	const { logout } = useAuth();
 	const navigate = useNavigate();
+	const [isEditing, setIsEditing] = useState(false);
 
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
+	};
+
+	const handleResetPassword = (student) => {
+		const newPassword = prompt(`New temporary password for ${student.lastName}:`);
+		if (!newPassword) return;
+		setStudents(
+			students.map((s) =>
+				s.id === student.id ? { ...s, password: newPassword } : s
+			)
+		);
+		alert("Password reset (mock only, not sent to backend yet).");
+	};
+
+	const handleDeactivate = (student) => {
+		const updated = students.map((s) =>
+			s.id === student.id ? { ...s, isActive: s.isActive === false ? true : false } : s
+		);
+		setStudents(updated);
+		setSelectedStudent(updated.find((s) => s.id === student.id));
 	};
 
 	return (
@@ -127,10 +148,30 @@ export function AdminDashboard() {
 					<>
 						<button
 							className="action-create"
-							onClick={() => setIsCreating(true)}
+							onClick={() => {
+								setIsCreating(true);
+								setSelectedStudent(null);
+								setIsEditing(false);
+							}}
 						>
 							Create
 						</button>
+
+						{selectedStudent && !isCreating && (
+							<div className="action-student-controls">
+								<button onClick={() => setIsEditing(true)}>Edit</button>
+								<button onClick={() => handleResetPassword(selectedStudent)}>
+									Reset password
+								</button>
+								<button
+									className="action-danger"
+									onClick={() => handleDeactivate(selectedStudent)}
+								>
+									{selectedStudent.isActive === false ? "Reactivate" : "Deactivate"}
+								</button>
+							</div>
+						)}
+
 						<div className="action-list">
 							{students.length === 0 && (
 								<p className="action-list-empty">No students yet</p>
@@ -138,13 +179,15 @@ export function AdminDashboard() {
 							{students.map((s) => (
 								<button
 									key={s.id}
-									className="action-list-item"
+									className={`action-list-item ${s.isActive === false ? "inactive" : ""}`}
 									onClick={() => {
 										setSelectedStudent(s);
 										setIsCreating(false);
+										setIsEditing(false);
 									}}
 								>
-									{s.firstName} {s.lastName}
+									{s.firstName} {s.lastName}{" "}
+									{s.isActive === false && <span className="inactive-badge">(Inactive)</span>}
 								</button>
 							))}
 						</div>
