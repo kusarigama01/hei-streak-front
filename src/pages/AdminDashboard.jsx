@@ -87,8 +87,24 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.STUDENTS && (
-					<div>Students view (a construire)</div>
+				{section === SECTIONS.STUDENTS && !isCreating && (
+					<>
+						{selectedStudent ? (
+							<ProfileCard
+								person={selectedStudent}
+								emptyEmblemsText="This student doesn't have any emblems"
+							/>
+						) : (
+							<div className="empty-state">
+								<img src={logo} alt="" className="empty-state-logo" />
+								<p>No accounts created yet</p>
+							</div>
+						)}
+					</>
+				)}
+
+				{section === SECTIONS.STUDENTS && isCreating && (
+					<div>Formulaire de creation (a construire)</div>
 				)}
 
 				{section === SECTIONS.COURSES && <div>Courses view (a construire)</div>}
