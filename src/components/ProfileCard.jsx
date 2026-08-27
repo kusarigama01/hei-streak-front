@@ -8,14 +8,13 @@ export function ProfileCard({ person, emptyEmblemsText }) {
           <img src={person.photoUrl} alt={person.firstName} />
         ) : (
           <span className="profile-photo-placeholder">
-            {person.firstName?.[0]}
-            {person.lastName?.[0]}
+            {person.firstName?.[0] ?? person.lastName?.slice(0, 2)}
           </span>
         )}
       </div>
 
       <h2 className="profile-name">{person.lastName}</h2>
-      <p className="profile-firstname">{person.firstName}</p>
+      {person.firstName && <p className="profile-firstname">{person.firstName}</p>}
 
       <div className="profile-info-block">
         <div className="profile-info-row">
