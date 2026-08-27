@@ -186,7 +186,7 @@ export function AdminDashboard() {
 										setIsEditing(false);
 									}}
 								>
-									{s.firstName} {s.lastName}{" "}
+									{s.firstName} {s.lastName} {" "}
 									{s.isActive === false && <span className="inactive-badge">(Inactive)</span>}
 								</button>
 							))}
