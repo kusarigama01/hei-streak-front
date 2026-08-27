@@ -1,18 +1,22 @@
 import { useState } from "react";
 import "./StudentForm.css";
 
-export function StudentForm({ onCancel, onCreate }) {
-	const [formData, setFormData] = useState({
-		lastName: "",
-		firstName: "",
-		birthDate: "",
-		birthPlace: "",
-		gender: "",
-		cin: "",
-		email: "",
-		password: "",
-		address: "",
-	});
+export const StudentForm = ({ onCancel, onCreate, initialData }) => {
+	const [formData, setFormData] = useState(
+		initialData ?? {
+			lastName: "",
+			firstName: "",
+			birthDate: "",
+			birthPlace: "",
+			gender: "",
+			cin: "",
+			email: "",
+			password: "",
+			address: "",
+			avatarFile: null,
+			avatarPreview: null,
+		}
+	);
 
 	const handleChange = (field) => (e) => {
 		setFormData({ ...formData, [field]: e.target.value });
@@ -25,7 +29,7 @@ export function StudentForm({ onCancel, onCreate }) {
 
 	return (
 		<form className="student-form" onSubmit={handleSubmit}>
-			<h2>Create a student</h2>
+			<h2>{initialData ? "Edit student" : "Create a student"}</h2>
 
 			<div className="form-field">
 				<label htmlFor="lastName">Last name *</label>
@@ -169,7 +173,7 @@ export function StudentForm({ onCancel, onCreate }) {
 					Cancel
 				</button>
 				<button type="submit" className="btn-create">
-					Create
+					{initialData ? "Save" : "Create"}
 				</button>
 			</div>
 		</form>

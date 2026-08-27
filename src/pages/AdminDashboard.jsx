@@ -109,7 +109,7 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.STUDENTS && !isCreating && (
+				{section === SECTIONS.STUDENTS && !isCreating && !isEditing && (
 					<>
 						{selectedStudent ? (
 							<ProfileCard
@@ -123,6 +123,21 @@ export function AdminDashboard() {
 							</div>
 						)}
 					</>
+				)}
+
+				{section === SECTIONS.STUDENTS && isEditing && selectedStudent && (
+					<StudentForm
+						initialData={selectedStudent}
+						onCancel={() => setIsEditing(false)}
+						onCreate={(updatedData) => {
+							const updated = students.map((s) =>
+								s.id === selectedStudent.id ? { ...updatedData, id: s.id } : s
+							);
+							setStudents(updated);
+							setSelectedStudent({ ...updatedData, id: selectedStudent.id });
+							setIsEditing(false);
+						}}
+					/>
 				)}
 
 				{section === SECTIONS.STUDENTS && isCreating && (
