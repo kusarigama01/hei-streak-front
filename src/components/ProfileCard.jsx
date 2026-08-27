@@ -4,8 +4,8 @@ export function ProfileCard({ person, emptyEmblemsText }) {
   return (
     <div className="profile-card">
       <div className="profile-photo">
-        {person.photoUrl ? (
-          <img src={person.photoUrl} alt={person.firstName} />
+        {person.avatarPreview ? (
+          <img src={person.avatarPreview} alt={person.firstName} />
         ) : (
           <span className="profile-photo-placeholder">
             {person.firstName?.[0] ?? person.lastName?.slice(0, 2)}
