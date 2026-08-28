@@ -75,6 +75,15 @@ export function AdminDashboard() {
 		setOpenExamMenu(null);
 	};
 
+	const getExamStatus = (exam) => {
+  const now = new Date();
+  const start = new Date(exam.startsAt);
+  const end = new Date(exam.endsAt);
+  if (now < start) return "unavailable";
+  if (now > end) return "over";
+  return "available";
+};
+
 	return (
 		<div className="dashboard-layout">
 			{/* ===== Sidebar ===== */}
@@ -256,12 +265,33 @@ export function AdminDashboard() {
 							</div>
 						) : (
 							<div className="exam-list">
-								{exams.map((ex) => (
-									<div key={ex.id} className="exam-block-placeholder">
-										{ex.title} — {ex.status}
-									</div>
-								))}
-							</div>
+  {exams.map((ex) => {
+    const status = getExamStatus(ex);
+    const meta = COURSE_META[ex.courseCode];
+    return (
+      <div key={ex.id} className={`exam-block status-${status}`}>
+        <div className="exam-block-top">
+          <span className="exam-block-code">
+            {status === "unavailable"
+              ? "EXAM UNAVAILABLE"
+              : `${ex.courseCode} - ${ex.type === "qcm" ? "QCM" : ex.type}`}
+          </span>
+          <span className="exam-block-status">Status: {status}</span>
+        </div>
+        <h3 className="exam-block-title">{ex.title}</h3>
+        <div className="exam-block-bottom">
+          <span className="exam-block-created">
+            Created {new Date(ex.createdAt).toLocaleString("en-GB")}
+          </span>
+          <span className="exam-block-window">
+            Available from {new Date(ex.startsAt).toLocaleString("en-GB")} to{" "}
+            {new Date(ex.endsAt).toLocaleString("en-GB")}
+          </span>
+        </div>
+      </div>
+    );
+  })}
+</div>
 						)}
 					</>
 				)}
