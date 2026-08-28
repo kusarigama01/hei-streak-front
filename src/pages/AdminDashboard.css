@@ -574,3 +574,162 @@
 .exam-menu-dropdown button:hover {
   background-color: #f4f4f4;
 }
+
+/* ===== Ecran de passage d'examen ===== */
+.exam-taking {
+  width: 100%;
+  max-width: 720px;
+}
+
+.exam-taking h2 {
+  color: #0a1f44;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.4rem;
+}
+
+.exam-taking-meta {
+  color: #666666;
+  font-size: 0.9rem;
+  margin: 0 0 2rem;
+  border-bottom: 3px solid #d4af37;
+  padding-bottom: 1rem;
+}
+
+.exam-question-block {
+  background-color: #ffffff;
+  border: 2px solid #0a1f44;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.exam-question-statement {
+  color: #0a1f44;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 1.25rem;
+}
+
+.exam-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.exam-choice-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333333;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.exam-choice-label:hover {
+  border-color: #0a1f44;
+  background-color: rgba(10, 31, 68, 0.03);
+}
+
+.exam-choice-label:has(input:checked) {
+  border-color: #d4af37;
+  background-color: rgba(212, 175, 55, 0.08);
+}
+
+.exam-choice-label input[type="radio"] {
+  accent-color: #0a1f44;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.choice-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #0a1f44;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.exam-taking-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ===== Modale de confirmation ===== */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(10, 31, 68, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.confirm-box {
+  background-color: #ffffff;
+  border: 3px solid #0a1f44;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 420px;
+  text-align: center;
+}
+
+.confirm-box p {
+  color: #0a1f44;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-cancel,
+.btn-create {
+  padding: 0.8rem 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-cancel {
+  background-color: #f4f4f4;
+  color: #666666;
+  border: 2px solid #cccccc;
+}
+
+.btn-cancel:hover {
+  background-color: #e8e8e8;
+}
+
+.btn-create {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+.btn-create:hover {
+  background-color: #d4af37;
+  color: #0a1f44;
+}
