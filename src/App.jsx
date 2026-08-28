@@ -19,10 +19,10 @@ function App() {
       />
 
       <Route
-        path="/student/*"
+        path="/student"
         element={
           <ProtectedRoute requiredRole="student">
-            <StudentPlaceholder />
+            <StudentDashboard />
           </ProtectedRoute>
         }
       />
