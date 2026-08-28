@@ -61,8 +61,8 @@
 
 .sidebar-logout {
   background: none;
-  border: 2px solid #d4af37;
-  color: #d4af37;
+  border: 2px solid #ff0000;
+  color: #ff0000;
   padding: 0.65rem 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -72,7 +72,7 @@
 }
 
 .sidebar-logout:hover {
-  background-color: #d4af37;
+  background-color: #ff0000;
   color: #0a1f44;
 }
 
