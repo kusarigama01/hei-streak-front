@@ -7,6 +7,9 @@ import "./AdminDashboard.css";
 import { ProfileCard } from "../components/ProfileCard.jsx";
 import { StudentForm } from "./StudentForm.jsx";
 
+import { CourseForm } from "./CourseForm.jsx";
+import { COURSE_META } from "./courseMeta.js";
+
 const SECTIONS = {
 	PROFILE: "profile",
 	STUDENTS: "students",
@@ -24,6 +27,13 @@ export function AdminDashboard() {
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 	const [isEditing, setIsEditing] = useState(false);
+
+	const [courses, setCourses] = useState([]);
+	const [courseSearch, setCourseSearch] = useState("");
+
+	const [isCreatingCourse, setIsCreatingCourse] = useState(false);
+
+	const [viewedCourse, setViewedCourse] = useState(null);
 
 	const handleLogout = () => {
 		logout();
@@ -119,7 +129,7 @@ export function AdminDashboard() {
 						) : (
 							<div className="empty-state">
 								<img src={logo} alt="" className="empty-state-logo" />
-								<p>No accounts created yet</p>
+								<p>Select or create a student</p>
 							</div>
 						)}
 					</>
@@ -152,7 +162,74 @@ export function AdminDashboard() {
 					/>
 				)}
 
-				{section === SECTIONS.COURSES && <div>Courses view (a construire)</div>}
+				{section === SECTIONS.COURSES && !isCreatingCourse && !viewedCourse && (
+					<>
+						{courses.length === 0 ? (
+							<div className="empty-state">
+								<img src={logo} alt="" className="empty-state-logo" />
+								<p>No courses created yet</p>
+							</div>
+						) : (
+							<div className="course-grid">
+								{courses.map((c) => (
+									<div key={c.id} className="course-tile" style={{ borderColor: c.color }}>
+										<i className={`fa-solid ${c.icon}`} style={{ color: c.color }}></i>
+										<span className="course-code" style={{ backgroundColor: c.color }}>
+											{c.code}
+										</span>
+										<h3>{c.name}</h3>
+										<span className="course-date">{c.createdAt}</span>
+										<button
+											className="course-view-btn"
+											onClick={() => setViewedCourse(c)}
+										>
+											View course
+										</button>
+									</div>
+								))}
+							</div>
+						)}
+					</>
+				)}
+
+				{section === SECTIONS.COURSES && isCreatingCourse && (
+					<CourseForm
+						onCancel={() => setIsCreatingCourse(false)}
+						onCreate={(newCourseData) => {
+							const meta = COURSE_META[newCourseData.code];
+							const newCourse = {
+								...newCourseData,
+								id: Date.now(),
+								color: meta.color,
+								icon: meta.icon,
+								createdAt: new Date().toLocaleString("en-GB", {
+									day: "2-digit",
+									month: "2-digit",
+									year: "numeric",
+									hour: "2-digit",
+									minute: "2-digit",
+								}),
+							};
+							setCourses([...courses, newCourse]);
+							setIsCreatingCourse(false);
+						}}
+					/>
+				)}
+
+				{section === SECTIONS.COURSES && viewedCourse && !isCreatingCourse && (
+					<div className="course-detail" style={{ borderColor: viewedCourse.color }}>
+						<button className="course-back-btn" onClick={() => setViewedCourse(null)}>
+							← Back to courses
+						</button>
+						<i className={`fa-solid ${viewedCourse.icon}`} style={{ color: viewedCourse.color }}></i>
+						<span className="course-code" style={{ backgroundColor: viewedCourse.color }}>
+							{viewedCourse.code}
+						</span>
+						<h2>{viewedCourse.name}</h2>
+						<span className="course-date">{viewedCourse.createdAt}</span>
+						<p className="course-full-description">{viewedCourse.description}</p>
+					</div>
+				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
 			</main>
@@ -204,7 +281,42 @@ export function AdminDashboard() {
 					</>
 				)}
 
-				{section === SECTIONS.COURSES && <div>Courses actions (a construire)</div>}
+				{section === SECTIONS.COURSES && (
+					<>
+						<button
+							className="action-create"
+							onClick={() => setIsCreatingCourse(true)}>
+							Add course
+						</button>
+
+						<input
+							type="text"
+							className="action-search"
+							placeholder="Search courses..."
+							value={courseSearch}
+							onChange={(e) => setCourseSearch(e.target.value)}
+						/>
+
+						<select className="action-filter">
+							<option value="">Filter...</option>
+							<option value="PROG2">PROG2</option>
+							<option value="WEB2">WEB2</option>
+							<option value="SYS2">SYS2</option>
+							<option value="LV1">LV1</option>
+						</select>
+
+						<div className="action-list">
+							{courses.length === 0 && (
+								<p className="action-list-empty">No courses yet</p>
+							)}
+							{courses.map((c) => (
+								<div key={c.id} className="action-list-item">
+									{c.code} — {c.name}
+								</div>
+							))}
+						</div>
+					</>
+				)}
 
 				{section === SECTIONS.EXAMS && <div>Exams actions (a construire)</div>}
 			</aside>

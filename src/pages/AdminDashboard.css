@@ -61,8 +61,8 @@
 
 .sidebar-logout {
   background: none;
-  border: 2px solid #d4af37;
-  color: #d4af37;
+  border: 2px solid #ff0000;
+  color: #ff0000;
   padding: 0.65rem 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -72,7 +72,7 @@
 }
 
 .sidebar-logout:hover {
-  background-color: #d4af37;
+  background-color: #ff0000;
   color: #0a1f44;
 }
 
@@ -234,4 +234,193 @@
 
 .action-list-item.inactive {
   opacity: 0.55;
+}
+
+.action-search {
+  padding: 0.65rem 1rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-size: 0.9rem;
+  outline: none;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-search::placeholder {
+  color: #999999;
+}
+
+.action-search:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+.action-filter {
+  padding: 0.6rem 1rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 1.5rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A1F44' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.25rem;
+  transition: border-color 0.15s ease;
+}
+
+.action-filter:focus {
+  border-color: #d4af37;
+}
+
+.action-create:disabled {
+  background-color: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+}
+
+.action-create:disabled:hover {
+  background-color: #cccccc;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.course-tile {
+  background-color: #ffffff;
+  max-height: 280px;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.course-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(10, 31, 68, 0.12);
+}
+
+.course-tile i {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.course-tile .course-code {
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+}
+
+.course-tile h3 {
+  color: #0a1f44;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.25rem 0 0;
+}
+
+.course-tile p {
+  color: #666666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-tile {
+  padding: 1.25rem 1rem; /* reduit par rapport a avant, la description ne pousse plus la hauteur */
+}
+
+.course-tile p {
+  display: none; /* la description n'apparait plus dans la grille */
+}
+
+.course-date {
+  color: #999999;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.course-view-btn {
+  margin-top: 0.5rem;
+  background: none;
+  border: 2px solid #0a1f44;
+  color: #0a1f44;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.course-view-btn:hover {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+.course-detail {
+  max-width: 640px;
+  width: 100%;
+  background-color: #ffffff;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.course-detail i {
+  font-size: 2.5rem;
+}
+
+.course-back-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #0a1f44;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.course-back-btn:hover {
+  color: #d4af37;
+}
+
+.course-full-description {
+  color: #444444;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  text-align: left;
+  margin-top: 1rem;
 }

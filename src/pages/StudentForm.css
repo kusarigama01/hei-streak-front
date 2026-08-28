@@ -128,3 +128,21 @@
   border: 3px solid #0a1f44;
   margin-top: 0.5rem;
 }
+
+.form-field textarea {
+  padding: 0.85rem 1.1rem;
+  border: 2px solid #cccccc;
+  border-radius: 16px;
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #0a1f44;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-field textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
