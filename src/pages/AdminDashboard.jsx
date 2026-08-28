@@ -68,15 +68,6 @@ export function AdminDashboard() {
 		// sera branche a l'etape 2, une fois le formulaire pret
 	};
 
-	const handleSuspendExam = (exam) => {
-		setExams(
-			exams.map((ex) =>
-				ex.id === exam.id ? { ...ex, status: "cancelled" } : ex
-			)
-		);
-		setOpenExamMenu(null);
-	};
-
 	const handleDeleteExam = (exam) => {
 		setExams(exams.filter((ex) => ex.id !== exam.id));
 		setOpenExamMenu(null);
@@ -389,7 +380,6 @@ export function AdminDashboard() {
 									{openExamMenu === ex.id && (
 										<div className="exam-menu-dropdown">
 											<button onClick={() => handleEditExam(ex)}>Edit</button>
-											<button onClick={() => handleSuspendExam(ex)}>Suspend</button>
 											<button onClick={() => handleDeleteExam(ex)}>Delete</button>
 										</div>
 									)}
