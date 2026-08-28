@@ -154,10 +154,10 @@ export const ExamForm = ({ onCancel, onCreate }) => {
 						/>
 						Multiple-choice questions
 					</label>
-					<br />
+
 					<label className="type-option disabled">
 						<input type="radio" name="type" value="code" disabled />
-						Code <span className="coming-soon">(Coming soon)</span>
+						Code <span className="coming-soon">Coming soon</span>
 					</label>
 				</div>
 			</div>
