@@ -434,14 +434,46 @@
 
 .exam-block {
   width: 100%;
-  padding: 1.25rem 2rem;
-  border-radius: 12px;
-  clip-path: polygon(0 0, 100% 0, 97% 100%, 0% 100%);
+  padding: 1.25rem 3rem;
+  clip-path: polygon(3% 0, 100% 0, 97% 100%, 0% 100%);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   color: #ffffff;
-  background: linear-gradient(135deg, #0a1f44, #16305f);
+  background: linear-gradient(120deg, #0a1f44 0%, #1e3a72 50%, #0a1f44 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  transition: background-position 0.35s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.exam-block:hover {
+  transform: scale(1.015);
+  background-position: 100% 0%;
+  box-shadow: 0 10px 24px rgba(10, 31, 68, 0.25);
+}
+
+.exam-block.status-unavailable {
+  background: #999999;
+  background-size: 100% 100%;
+  color: #eeeeee;
+}
+
+.exam-block.status-unavailable:hover {
+  transform: scale(1.015);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.exam-block.status-over {
+  background: linear-gradient(120deg, #1a1a1a 0%, #3a3a3a 50%, #1a1a1a 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  opacity: 0.85;
+}
+
+.exam-block.status-over:hover {
+  transform: scale(1.015);
+  background-position: 100% 0%;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
 .exam-block-top,
