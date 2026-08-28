@@ -20,18 +20,54 @@ export function StudentDashboard() {
 			title: "Quiz HTML de base",
 			courseCode: "WEB2",
 			endsAt: "2026-09-05T23:59:00",
-			questionCount: 5,
-			totalPoints: 5,
+			questionCount: 1,
+			totalPoints: 1,
+			questions: [
+				{
+					id: 101,
+					statement: "Que signifie HTML ?",
+					points: 1,
+					choices: [
+						{ id: 1, letter: "A", text: "HyperText Markup Language" },
+						{ id: 2, letter: "B", text: "HighText Machine Language" },
+						{ id: 3, letter: "C", text: "HyperTransfer Markup Language" },
+						{ id: 4, letter: "D", text: "Home Tool Markup Language" },
+						{ id: 5, letter: "E", text: "Hyperlink Text Markup Language" },
+						{ id: 6, letter: "F", text: "Hyper Modern Language" },
+					],
+					correctChoiceId: 1, // lettre A, jamais envoye au student en vrai (RG-07), ici seulement pour la simulation front
+				},
+			],
 		},
 		{
 			id: 2,
 			title: "Contrôle POO",
 			courseCode: "PROG2",
 			endsAt: "2026-09-10T18:00:00",
-			questionCount: 8,
-			totalPoints: 10,
+			questionCount: 1,
+			totalPoints: 1,
+			questions: [
+				{
+					id: 201,
+					statement: "Quel principe de la POO permet de cacher les détails internes d'une classe ?",
+					points: 1,
+					choices: [
+						{ id: 1, letter: "A", text: "Héritage" },
+						{ id: 2, letter: "B", text: "Polymorphisme" },
+						{ id: 3, letter: "C", text: "Encapsulation" },
+						{ id: 4, letter: "D", text: "Abstraction" },
+						{ id: 5, letter: "E", text: "Composition" },
+						{ id: 6, letter: "F", text: "Instanciation" },
+					],
+					correctChoiceId: 3, // lettre C
+				},
+			],
 		},
 	]);
+
+	const [activeExam, setActiveExam] = useState(null); // exam en cours de passage
+	const [answers, setAnswers] = useState({}); // { questionId: choiceId }
+	const [showConfirm, setShowConfirm] = useState(false);
 
 	const [examSearch, setExamSearch] = useState("");
 
@@ -90,18 +126,18 @@ export function StudentDashboard() {
 							email: "student@heistreak.com",
 							role: "student",
 						}}
-						emptyEmblemsText="This student doesn't have any emblems"
+						emptyEmblemsText="No emblems"
 					/>
 				)}
 
 				{section === SECTIONS.CODE && (
 					<div className="empty-state">
 						<img src={logo} alt="" className="empty-state-logo" />
-						<p>Coming soon</p>
+						<p>Coming soon...</p>
 					</div>
 				)}
 
-				{section === SECTIONS.EXAMS && (
+				{section === SECTIONS.EXAMS && !activeExam && (
 					<>
 						{exams.length === 0 ? (
 							<div className="empty-state">
@@ -120,7 +156,14 @@ export function StudentDashboard() {
 										<p className="student-exam-deadline">
 											Available until {new Date(ex.endsAt).toLocaleString("en-GB")}
 										</p>
-										<button className="student-exam-start-btn">
+										<button
+											className="student-exam-start-btn"
+											onClick={() => {
+												setActiveExam(ex);
+												setAnswers({});
+												setShowConfirm(false);
+											}}
+										>
 											Take exam
 										</button>
 									</div>
@@ -128,6 +171,76 @@ export function StudentDashboard() {
 							</div>
 						)}
 					</>
+				)}
+
+				{section === SECTIONS.EXAMS && activeExam && (
+					<div className="exam-taking">
+						<h2>{activeExam.title}</h2>
+						<p className="exam-taking-meta">
+							{activeExam.courseCode} • {activeExam.questionCount} question(s) • {activeExam.totalPoints} point(s)
+						</p>
+
+						{activeExam.questions.map((q, qIndex) => (
+							<div key={q.id} className="exam-question-block">
+								<p className="exam-question-statement">
+									{qIndex + 1}. {q.statement}
+								</p>
+								<div className="exam-choices">
+									{q.choices.map((c) => (
+										<label key={c.id} className="exam-choice-label">
+											<input
+												type="radio"
+												name={`question-${q.id}`}
+												checked={answers[q.id] === c.id}
+												onChange={() =>
+													setAnswers({ ...answers, [q.id]: c.id })
+												}
+											/>
+											<span className="choice-letter">{c.letter}</span>
+											{c.text}
+										</label>
+									))}
+								</div>
+							</div>
+						))}
+
+						<div className="exam-taking-actions">
+							<button
+								className="btn-cancel"
+								onClick={() => setActiveExam(null)}
+							>
+								Cancel
+							</button>
+							<button
+								className="btn-create"
+								onClick={() => setShowConfirm(true)}
+							>
+								Submit
+							</button>
+						</div>
+
+						{showConfirm && (
+							<div className="confirm-overlay">
+								<div className="confirm-box">
+									<p>Are you sure you want to submit your answers? This cannot be undone.</p>
+									<div className="confirm-actions">
+										<button className="btn-cancel" onClick={() => setShowConfirm(false)}>
+											Go back
+										</button>
+										<button
+											className="btn-create"
+											onClick={() => {
+												// sera branche a l'etape suivante (calcul du resultat)
+												setShowConfirm(false);
+											}}
+										>
+											Confirm submission
+										</button>
+									</div>
+								</div>
+							</div>
+						)}
+					</div>
 				)}
 			</main>
 
