@@ -10,6 +10,8 @@ import { StudentForm } from "./StudentForm.jsx";
 import { CourseForm } from "./CourseForm.jsx";
 import { COURSE_META } from "./courseMeta.js";
 
+import { ExamForm } from "./ExamForm.jsx";
+
 const SECTIONS = {
 	PROFILE: "profile",
 	STUDENTS: "students",
@@ -35,6 +37,10 @@ export function AdminDashboard() {
 
 	const [viewedCourse, setViewedCourse] = useState(null);
 
+	const [exams, setExams] = useState([]);
+	const [isCreatingExam, setIsCreatingExam] = useState(false);
+	const [openExamMenu, setOpenExamMenu] = useState(null); // id de l'exam dont le menu "..." est ouvert
+
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
@@ -58,6 +64,25 @@ export function AdminDashboard() {
 		setStudents(updated);
 		setSelectedStudent(updated.find((s) => s.id === student.id));
 	};
+
+	const handleEditExam = (exam) => {
+		setOpenExamMenu(null);
+		// sera branche a l'etape 2, une fois le formulaire pret
+	};
+
+	const handleDeleteExam = (exam) => {
+		setExams(exams.filter((ex) => ex.id !== exam.id));
+		setOpenExamMenu(null);
+	};
+
+	const getExamStatus = (exam) => {
+  const now = new Date();
+  const start = new Date(exam.startsAt);
+  const end = new Date(exam.endsAt);
+  if (now < start) return "unavailable";
+  if (now > end) return "over";
+  return "available";
+};
 
 	return (
 		<div className="dashboard-layout">
@@ -231,7 +256,60 @@ export function AdminDashboard() {
 					</div>
 				)}
 
-				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
+				{section === SECTIONS.EXAMS && !isCreatingExam && (
+					<>
+						{exams.length === 0 ? (
+							<div className="empty-state">
+								<img src={logo} alt="" className="empty-state-logo" />
+								<p>No exams created yet</p>
+							</div>
+						) : (
+							<div className="exam-list">
+  {exams.map((ex) => {
+    const status = getExamStatus(ex);
+    const meta = COURSE_META[ex.courseCode];
+    return (
+      <div key={ex.id} className={`exam-block status-${status}`}>
+        <div className="exam-block-top">
+          <span className="exam-block-code">
+            {status === "unavailable"
+              ? "EXAM UNAVAILABLE"
+              : `${ex.courseCode} - ${ex.type === "qcm" ? "QCM" : ex.type}`}
+          </span>
+          <span className="exam-block-status">Status: {status}</span>
+        </div>
+        <h3 className="exam-block-title">{ex.title}</h3>
+        <div className="exam-block-bottom">
+          <span className="exam-block-created">
+            Created {new Date(ex.createdAt).toLocaleString("en-GB")}
+          </span>
+          <span className="exam-block-window">
+            Available from {new Date(ex.startsAt).toLocaleString("en-GB")} to{" "}
+            {new Date(ex.endsAt).toLocaleString("en-GB")}
+          </span>
+        </div>
+      </div>
+    );
+  })}
+</div>
+						)}
+					</>
+				)}
+
+				{section === SECTIONS.EXAMS && isCreatingExam && (
+  <ExamForm
+    onCancel={() => setIsCreatingExam(false)}
+    onCreate={(newExamData) => {
+      const newExam = {
+        ...newExamData,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      };
+      setExams([...exams, newExam]);
+      setIsCreatingExam(false);
+    }}
+  />
+)}
 			</main>
 
 			{/* ===== Barre d'actions droite ===== */}
@@ -318,7 +396,41 @@ export function AdminDashboard() {
 					</>
 				)}
 
-				{section === SECTIONS.EXAMS && <div>Exams actions (a construire)</div>}
+				{section === SECTIONS.EXAMS && (
+					<>
+						<button
+							className="action-create"
+							onClick={() => setIsCreatingExam(true)}
+						>
+							Add exam
+						</button>
+
+						<div className="action-list">
+							{exams.length === 0 && (
+								<p className="action-list-empty">No exams yet</p>
+							)}
+							{exams.map((ex) => (
+								<div key={ex.id} className="action-list-item exam-action-item">
+									<span>{ex.title}</span>
+									<button
+										className="exam-menu-trigger"
+										onClick={() =>
+											setOpenExamMenu(openExamMenu === ex.id ? null : ex.id)
+										}
+									>
+										•••
+									</button>
+									{openExamMenu === ex.id && (
+										<div className="exam-menu-dropdown">
+											<button onClick={() => handleEditExam(ex)}>Edit</button>
+											<button onClick={() => handleDeleteExam(ex)}>Delete</button>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+					</>
+				)}
 			</aside>
 		</div>
 	);
