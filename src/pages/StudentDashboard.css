@@ -127,3 +127,81 @@
   font-size: 0.9rem;
   font-style: italic;
 }
+
+.student-exam-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.student-exam-card {
+  background-color: #ffffff;
+  border: 2px solid #0a1f44;
+  max-height: 280px;
+  border-radius: 16px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.student-exam-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(10, 31, 68, 0.12);
+}
+
+.student-exam-code {
+  align-self: flex-start;
+  background-color: #0a1f44;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+}
+
+.student-exam-card h3 {
+  color: #0a1f44;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0.4rem 0 0;
+}
+
+.student-exam-meta {
+  color: #666666;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.student-exam-deadline {
+  color: #999999;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin: 0 0 0.5rem;
+}
+
+.student-exam-start-btn {
+  align-self: flex-start;
+  background-color: #d4af37;
+  color: #0a1f44;
+  border: none;
+  padding: 0.65rem 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.student-exam-start-btn:hover {
+  background-color: #b8962e;
+}
+
+.student-exam-start-btn:active {
+  transform: scale(0.96);
+}
