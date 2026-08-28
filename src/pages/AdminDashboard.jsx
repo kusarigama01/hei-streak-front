@@ -359,7 +359,7 @@ export function AdminDashboard() {
 							className="action-create"
 							onClick={() => setIsCreatingExam(true)}
 						>
-							Create exam
+							Add exam
 						</button>
 
 						<div className="action-list">
