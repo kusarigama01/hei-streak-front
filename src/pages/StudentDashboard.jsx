@@ -71,6 +71,8 @@ export function StudentDashboard() {
 
 	const [examSearch, setExamSearch] = useState("");
 
+	const [examResult, setExamResult] = useState(null);
+
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
@@ -137,7 +139,7 @@ export function StudentDashboard() {
 					</div>
 				)}
 
-				{section === SECTIONS.EXAMS && !activeExam && (
+				{section === SECTIONS.EXAMS && !activeExam && !examResult && (
 					<>
 						{exams.length === 0 ? (
 							<div className="empty-state">
@@ -230,8 +232,32 @@ export function StudentDashboard() {
 										<button
 											className="btn-create"
 											onClick={() => {
-												// sera branche a l'etape suivante (calcul du resultat)
+												const correction = activeExam.questions.map((q) => {
+													const studentChoiceId = answers[q.id] ?? null;
+													const isCorrect = studentChoiceId === q.correctChoiceId;
+													return {
+														questionId: q.id,
+														statement: q.statement,
+														points: q.points,
+														choices: q.choices,
+														studentChoiceId,
+														correctChoiceId: q.correctChoiceId,
+														isCorrect,
+													};
+												});
+												const score = correction.reduce(
+													(sum, c) => sum + (c.isCorrect ? c.points : 0),
+													0
+												);
+												setExamResult({
+													examTitle: activeExam.title,
+													courseCode: activeExam.courseCode,
+													score,
+													totalPoints: activeExam.totalPoints,
+													correction,
+												});
 												setShowConfirm(false);
+												setActiveExam(null);
 											}}
 										>
 											Confirm submission
@@ -240,6 +266,50 @@ export function StudentDashboard() {
 								</div>
 							</div>
 						)}
+					</div>
+				)}
+
+				{section === SECTIONS.EXAMS && examResult && (
+					<div className="exam-result">
+						<div className="exam-result-score">
+							<span className="score-value">
+								{examResult.score} / {examResult.totalPoints}
+							</span>
+							<span className="score-label">{examResult.examTitle}</span>
+						</div>
+
+						<div className="exam-correction">
+							{examResult.correction.map((c, i) => (
+								<div
+									key={c.questionId}
+									className={`correction-block ${c.isCorrect ? "correct" : "incorrect"}`}
+								>
+									<p className="correction-statement">
+										{i + 1}. {c.statement}
+									</p>
+									<div className="correction-choices">
+										{c.choices.map((choice) => {
+											const isStudentChoice = choice.id === c.studentChoiceId;
+											const isCorrectChoice = choice.id === c.correctChoiceId;
+											let choiceClass = "";
+											if (isCorrectChoice) choiceClass = "choice-correct";
+											else if (isStudentChoice && !isCorrectChoice) choiceClass = "choice-wrong";
+											return (
+												<div key={choice.id} className={`correction-choice ${choiceClass}`}>
+													<span className="choice-letter">{choice.letter}</span>
+													{choice.text}
+													{isStudentChoice && <span className="your-answer-tag">Your answer</span>}
+												</div>
+											);
+										})}
+									</div>
+								</div>
+							))}
+						</div>
+
+						<button className="btn-create" onClick={() => setExamResult(null)}>
+							Back to exams
+						</button>
 					</div>
 				)}
 			</main>
