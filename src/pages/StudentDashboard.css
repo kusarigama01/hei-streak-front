@@ -138,7 +138,7 @@
 .student-exam-card {
   background-color: #ffffff;
   border: 2px solid #0a1f44;
-  max-height: 280px;
+  max-height: 250px;
   border-radius: 16px;
   padding: 1.75rem;
   display: flex;
@@ -204,4 +204,35 @@
 
 .student-exam-start-btn:active {
   transform: scale(0.96);
+}
+
+.action-search {
+  padding: 0.65rem 1rem;
+  border: 2px solid #0a1f44;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-size: 0.9rem;
+  outline: none;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-search::placeholder {
+  color: #999999;
+}
+
+.action-search:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+.action-list-item {
+  background-color: #f4f4f4;
+  border: 1px solid #cccccc;
+  border-left: 3px solid #0a1f44;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  color: #0a1f44;
+  font-size: 0.85rem;
 }

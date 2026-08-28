@@ -33,6 +33,8 @@ export function StudentDashboard() {
 		},
 	]);
 
+	const [examSearch, setExamSearch] = useState("");
+
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
@@ -132,9 +134,30 @@ export function StudentDashboard() {
 			{/* ===== Barre d'actions droite ===== */}
 			<aside className="dashboard-actions">
 				{section === SECTIONS.EXAMS && (
-					<div className="action-list">
-						<p className="action-list-empty">No exams yet</p>
-					</div>
+					<>
+						<input
+							type="text"
+							className="action-search"
+							placeholder="Search exams..."
+							value={examSearch}
+							onChange={(e) => setExamSearch(e.target.value)}
+						/>
+
+						<div className="action-list">
+							{exams.length === 0 && (
+								<p className="action-list-empty">No exams yet</p>
+							)}
+							{exams
+								.filter((ex) =>
+									ex.title.toLowerCase().includes(examSearch.toLowerCase())
+								)
+								.map((ex) => (
+									<div key={ex.id} className="action-list-item">
+										{ex.courseCode} — {ex.title}
+									</div>
+								))}
+						</div>
+					</>
 				)}
 			</aside>
 		</div>
