@@ -35,6 +35,10 @@ export function AdminDashboard() {
 
 	const [viewedCourse, setViewedCourse] = useState(null);
 
+	const [exams, setExams] = useState([]);
+	const [isCreatingExam, setIsCreatingExam] = useState(false);
+	const [openExamMenu, setOpenExamMenu] = useState(null); // id de l'exam dont le menu "..." est ouvert
+
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
@@ -57,6 +61,25 @@ export function AdminDashboard() {
 		);
 		setStudents(updated);
 		setSelectedStudent(updated.find((s) => s.id === student.id));
+	};
+
+	const handleEditExam = (exam) => {
+		setOpenExamMenu(null);
+		// sera branche a l'etape 2, une fois le formulaire pret
+	};
+
+	const handleSuspendExam = (exam) => {
+		setExams(
+			exams.map((ex) =>
+				ex.id === exam.id ? { ...ex, status: "cancelled" } : ex
+			)
+		);
+		setOpenExamMenu(null);
+	};
+
+	const handleDeleteExam = (exam) => {
+		setExams(exams.filter((ex) => ex.id !== exam.id));
+		setOpenExamMenu(null);
 	};
 
 	return (
@@ -231,7 +254,28 @@ export function AdminDashboard() {
 					</div>
 				)}
 
-				{section === SECTIONS.EXAMS && <div>Exams view (a construire)</div>}
+				{section === SECTIONS.EXAMS && !isCreatingExam && (
+					<>
+						{exams.length === 0 ? (
+							<div className="empty-state">
+								<img src={logo} alt="" className="empty-state-logo" />
+								<p>No exams created yet</p>
+							</div>
+						) : (
+							<div className="exam-list">
+								{exams.map((ex) => (
+									<div key={ex.id} className="exam-block-placeholder">
+										{ex.title} — {ex.status}
+									</div>
+								))}
+							</div>
+						)}
+					</>
+				)}
+
+				{section === SECTIONS.EXAMS && isCreatingExam && (
+					<div>Exam form (a construire)</div>
+				)}
 			</main>
 
 			{/* ===== Barre d'actions droite ===== */}
@@ -318,7 +362,42 @@ export function AdminDashboard() {
 					</>
 				)}
 
-				{section === SECTIONS.EXAMS && <div>Exams actions (a construire)</div>}
+				{section === SECTIONS.EXAMS && (
+					<>
+						<button
+							className="action-create"
+							onClick={() => setIsCreatingExam(true)}
+						>
+							Create exam
+						</button>
+
+						<div className="action-list">
+							{exams.length === 0 && (
+								<p className="action-list-empty">No exams yet</p>
+							)}
+							{exams.map((ex) => (
+								<div key={ex.id} className="action-list-item exam-action-item">
+									<span>{ex.title}</span>
+									<button
+										className="exam-menu-trigger"
+										onClick={() =>
+											setOpenExamMenu(openExamMenu === ex.id ? null : ex.id)
+										}
+									>
+										•••
+									</button>
+									{openExamMenu === ex.id && (
+										<div className="exam-menu-dropdown">
+											<button onClick={() => handleEditExam(ex)}>Edit</button>
+											<button onClick={() => handleSuspendExam(ex)}>Suspend</button>
+											<button onClick={() => handleDeleteExam(ex)}>Delete</button>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+					</>
+				)}
 			</aside>
 		</div>
 	);
