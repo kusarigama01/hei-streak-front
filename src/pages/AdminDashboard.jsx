@@ -10,6 +10,8 @@ import { StudentForm } from "./StudentForm.jsx";
 import { CourseForm } from "./CourseForm.jsx";
 import { COURSE_META } from "./courseMeta.js";
 
+import { ExamForm } from "./ExamForm.jsx";
+
 const SECTIONS = {
 	PROFILE: "profile",
 	STUDENTS: "students",
@@ -265,8 +267,19 @@ export function AdminDashboard() {
 				)}
 
 				{section === SECTIONS.EXAMS && isCreatingExam && (
-					<div>Exam form (a construire)</div>
-				)}
+  <ExamForm
+    onCancel={() => setIsCreatingExam(false)}
+    onCreate={(newExamData) => {
+      const newExam = {
+        ...newExamData,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      };
+      setExams([...exams, newExam]);
+      setIsCreatingExam(false);
+    }}
+  />
+)}
 			</main>
 
 			{/* ===== Barre d'actions droite ===== */}
