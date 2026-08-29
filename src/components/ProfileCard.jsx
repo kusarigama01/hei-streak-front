@@ -1,6 +1,6 @@
 import "./ProfileCard.css";
 
-export function ProfileCard({ person, emptyEmblemsText }) {
+export function ProfileCard({ person, emptyEmblemsText, examHistory }) {
   return (
     <div className="profile-card">
       <div className="profile-photo">
@@ -42,7 +42,29 @@ export function ProfileCard({ person, emptyEmblemsText }) {
       </div>
 
       <div className="profile-emblems">
-        <p>{emptyEmblemsText}</p>
+        <h3 className="profile-history-title">Exam History</h3>
+        {examHistory && examHistory.length > 0 ? (
+          <div className="profile-history-list">
+            {examHistory.map((h) => (
+              <div key={h.id} className="profile-history-row">
+                <div className="profile-history-main">
+                  <span className="profile-history-code">{h.courseCode}</span>
+                  <span className="profile-history-title-text">{h.examTitle}</span>
+                </div>
+                <div className="profile-history-meta">
+                  <span className="profile-history-score">
+                    {h.score}/{h.totalPoints}
+                  </span>
+                  <span className="profile-history-date">
+                    {new Date(h.submittedAt).toLocaleString("en-GB")}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>{emptyEmblemsText}</p>
+        )}
       </div>
     </div>
   );
