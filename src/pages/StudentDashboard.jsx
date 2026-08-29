@@ -76,6 +76,8 @@ export function StudentDashboard() {
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
+	const [examHistory, setExamHistory] = useState([]);
+
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
@@ -128,7 +130,8 @@ export function StudentDashboard() {
 							email: "student@heistreak.com",
 							role: "student",
 						}}
-						emptyEmblemsText="No emblems"
+						emptyEmblemsText="No exams taken yet"
+						examHistory={examHistory}
 					/>
 				)}
 
@@ -256,6 +259,18 @@ export function StudentDashboard() {
 													totalPoints: activeExam.totalPoints,
 													correction,
 												});
+
+												setExamHistory([
+													...examHistory,
+													{
+														id: Date.now(),
+														examTitle: activeExam.title,
+														courseCode: activeExam.courseCode,
+														score,
+														totalPoints: activeExam.totalPoints,
+														submittedAt: new Date().toISOString(),
+													},
+												]);
 												setShowConfirm(false);
 												setActiveExam(null);
 											}}
