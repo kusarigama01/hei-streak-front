@@ -59,9 +59,39 @@ export function AdminDashboard() {
 
 		const [viewedCourse, setViewedCourse] = useState(null);
 
-		const [exams, setExams] = useState([]);
+		const [exams, setExams] = useState([
+  {
+    id: 1,
+    title: "Quiz HTML de base",
+    courseCode: "WEB2",
+    type: "qcm",
+    startsAt: "2026-08-01T00:00:00",
+    endsAt: "2026-12-31T23:59:00",
+    createdAt: "2026-08-25T10:00:00",
+    attemptCount: 2,
+    totalPoints: 5,
+    questions: [
+      {
+        id: 1,
+        statement: "What does HTML stand for?",
+        points: 5,
+        choices: [
+          { id: 1, text: "HyperText Markup Language", isCorrect: true },
+          { id: 2, text: "HighText Machine Language", isCorrect: false },
+        ],
+      },
+    ],
+    results: [
+      { studentId: 1, name: "Jean Rakoto", score: 5, submittedAt: "2026-08-28T10:00:00" },
+      { studentId: 2, name: "Marie Rasoa", score: 3, submittedAt: "2026-08-28T11:30:00" },
+    ],
+  },
+]);
 		const [isCreatingExam, setIsCreatingExam] = useState(false);
 		const [openExamMenu, setOpenExamMenu] = useState(null); // id de l'exam dont le menu "..." est ouvert
+
+const [viewingQuestionsFor, setViewingQuestionsFor] = useState(null);
+const [viewingResultsFor, setViewingResultsFor] = useState(null);
 
 		const handleLogout = () => {
 			logout();
@@ -332,6 +362,100 @@ export function AdminDashboard() {
 							}}
 						/>
 					)}
+
+					{section === SECTIONS.EXAMS && viewingQuestionsFor && (
+  <div className="questions-editor">
+    <button className="course-back-btn" onClick={() => setViewingQuestionsFor(null)}>
+      ← Close
+    </button>
+
+    <h2>{viewingQuestionsFor.title} — Questions</h2>
+
+    {(viewingQuestionsFor.attemptCount ?? 0) > 0 && (
+      <div className="locked-banner">
+        🔒 This exam has attempts. Questions are locked and cannot be modified (RG-08).
+      </div>
+    )}
+
+    {(viewingQuestionsFor.questions ?? []).length === 0 ? (
+      <p className="action-list-empty">No questions added yet for this exam.</p>
+    ) : (
+      <div className="questions-readonly-list">
+        {viewingQuestionsFor.questions.map((q, i) => (
+          <div key={q.id} className="question-readonly-block">
+            <p className="correction-statement">
+              {i + 1}. {q.statement} ({q.points} pt{q.points > 1 ? "s" : ""})
+            </p>
+            <div className="correction-choices">
+              {q.choices.map((c) => (
+                <div
+                  key={c.id}
+                  className={`correction-choice ${c.isCorrect ? "choice-correct" : ""}`}
+                >
+                  {c.text}
+                  {c.isCorrect && <span className="your-answer-tag">Correct</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
+{section === SECTIONS.EXAMS && viewingResultsFor && (
+  <div className="exam-results-view">
+    <button className="course-back-btn" onClick={() => setViewingResultsFor(null)}>
+      ← Back to exams
+    </button>
+
+    <h2>{viewingResultsFor.title} — Results</h2>
+
+    {(viewingResultsFor.results ?? []).length === 0 ? (
+      <p className="action-list-empty">No attempts yet for this exam.</p>
+    ) : (
+      <>
+        <div className="results-summary">
+          <div className="results-stat">
+            <span className="results-stat-value">
+              {(
+                viewingResultsFor.results.reduce((sum, r) => sum + r.score, 0) /
+                viewingResultsFor.results.length
+              ).toFixed(2)}
+            </span>
+            <span className="results-stat-label">Average</span>
+          </div>
+          <div className="results-stat">
+            <span className="results-stat-value">
+              {viewingResultsFor.results.length}
+            </span>
+            <span className="results-stat-label">Attempts</span>
+          </div>
+        </div>
+
+        <table className="results-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Score</th>
+              <th>Submitted at</th>
+            </tr>
+          </thead>
+          <tbody>
+            {viewingResultsFor.results.map((r) => (
+              <tr key={r.studentId}>
+                <td>{r.name}</td>
+                <td>{r.score} / {viewingResultsFor.totalPoints}</td>
+                <td>{new Date(r.submittedAt).toLocaleString("en-GB")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    )}
+  </div>
+)}
 				</main>
 
 				{/* ===== Barre d'actions droite ===== */}
@@ -443,11 +567,17 @@ export function AdminDashboard() {
 											•••
 										</button>
 										{openExamMenu === ex.id && (
-											<div className="exam-menu-dropdown">
-												<button onClick={() => handleEditExam(ex)}>Edit</button>
-												<button onClick={() => handleDeleteExam(ex)}>Delete</button>
-											</div>
-										)}
+  <div className="exam-menu-dropdown">
+    <button onClick={() => { setViewingQuestionsFor(ex); setOpenExamMenu(null); }}>
+      Questions
+    </button>
+    <button onClick={() => { setViewingResultsFor(ex); setOpenExamMenu(null); }}>
+      Results
+    </button>
+    <button onClick={() => handleEditExam(ex)}>Edit</button>
+    <button onClick={() => handleDeleteExam(ex)}>Delete</button>
+  </div>
+)}
 									</div>
 								))}
 							</div>
